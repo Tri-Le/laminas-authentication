@@ -1,0 +1,20 @@
+{
+  "name": "tri-le/laminas-authentication",
+  "description": "Authentication module for laminas application",
+  "type": "library",
+  "keywords": [
+    "laminas",
+    "authentication module"
+  ],
+  "autoload": {
+    "psr-4": {
+      "TriLe\\Authentication\\": "src"
+    }
+  },
+  "require": {
+    "php": ">=7.0",
+    "laminas/laminas-mvc": "^3.0",
+    "laminas/laminas-authentication": "^2.0",
+    "laminas/laminas-form": "^2.14"
+  }
+}
