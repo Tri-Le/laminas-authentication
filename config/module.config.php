@@ -30,7 +30,9 @@ return [
     ],
     'view_manager' => [
         'template_map' => [
-            'layout/login' => __DIR__ . '/../view/layout/login.phtml'
+            'layout/login' => __DIR__ . '/../view/layout/login.phtml',
+
+            'tri-le/authentication/login/index' => __DIR__ . '/../view/login/index.phtml'
         ]
     ],
     'service_manager' => [
