@@ -1,1 +1,7 @@
 <h1><?=$this->translate('Successfully')?></h1>
+
+<?php $this->inlineScript()->captureStart();?>
+setTimeout(function(){
+	window.top.location = "<?php echo $destination;?>";
+}, 3000);
+<?php $this->inlineScript()->captureEnd();
