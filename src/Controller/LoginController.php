@@ -41,8 +41,4 @@ class LoginController extends AbstractActionController {
 			'form' => $form
 		]);
 	}
-
-	public function successAction() {
-		return new ViewModel();
-	}
 }
