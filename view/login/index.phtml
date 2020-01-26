@@ -1,4 +1,26 @@
 <h1><?=$this->translate('Login')?></h1>
 <?php
 $form->prepare();
-echo $this->formCollection($form);
+echo $this->form()->openTag($form);
+?>
+<div class="form-group">
+	<?php
+	$element = $form->get('Email');
+	echo $this->formEmail($element), $this->formElementErrors($element);
+	?>
+</div>
+
+<div class="form-group">
+	<?php
+	$element = $form->get('Password');
+	echo $this->formPassword($element), $this->formElementErrors($element);
+	?>
+</div>
+
+<div class="form-group">
+	<?php
+	echo $this->formSubmit($form->get('LoginButton')), $this->formHidden($form->get('csrf'));
+	?>
+</div>
+<?php
+echo $this->form()->closeTag();

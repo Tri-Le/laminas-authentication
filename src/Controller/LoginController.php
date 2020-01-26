@@ -29,11 +29,15 @@ class LoginController extends AbstractActionController {
 				$data = $form->getData();
 				$adapter = $this->service->getAdapter();
 				$adapter->setIdentity($data['Email'])->setCredential($data['Password']);
+				$this->getEventManager()->trigger('authentication.pre', $this, [$data]);
 				$result = $this->service->authenticate();
 
 				if ($result->isValid()) {
+					$this->getEventManager()->trigger('authentication.success', $this, [$data, $result]);
 					return $this->redirect()->toRoute('login/success');
 				}
+
+				$this->getEventManager()->trigger('authentication.fail', $this, [$data, $result]);
 			}
 		}
 
