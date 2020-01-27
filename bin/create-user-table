@@ -15,7 +15,18 @@ if (file_exists($a = getcwd() . '/vendor/autoload.php')) {
 $app = \Laminas\Mvc\Application::init(require getcwd() . '/config/application.config.php');
 $config = $app->getConfig()['authentication'];
 
-$sql = <<<EOF
+$adapter = $app->getServiceManager()->get(\Laminas\Db\Adapter\Adapter::class);
+$existed = true;
+try {
+	$result = $adapter->query('SELECT COUNT(id) FROM ' . $config['table_name']);
+} catch(Exception $e) {
+	$existed = false;
+}
+if ($existed) {
+	fwrite(STDERR, 'Table ' . $config['table_name'] . ' is already exist.' . PHP_EOL);
+	return;
+}
+$adapter->query(<<<EOF
 create table ${config['table_name']}
 (
 	id       integer
@@ -24,10 +35,12 @@ create table ${config['table_name']}
     ${config['identity_column']}    varchar default 255,
     ${config['credential_column']} varchar default 255,
     status   smallint
-);
+)
+EOF
+	, \Laminas\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
 
+$adapter->query(<<<EOF
 create unique index ${config['table_name']}_${config['identity_column']}_uindex
-    on ${config['table_name']} (${config['identity_column']});
-EOF;
-
-$app->getServiceManager()->get(\Laminas\Db\Adapter\Adapter::class)->query($sql);
+    on ${config['table_name']} (${config['identity_column']})
+EOF
+	, \Laminas\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
