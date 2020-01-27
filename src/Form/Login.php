@@ -13,7 +13,7 @@ class Login extends \Laminas\Form\Form {
 			'type' => 'submit',
 			'name' => 'LoginButton',
 			'attributes' => [
-				'id' => 'login-button',
+				'id' => 'log-in-button',
 				'value' => 'Login'
 			]
 		])->add([

@@ -16,7 +16,7 @@ class LogInController extends AbstractActionController {
 
 	public function onDispatch(MvcEvent $e) {
 		$this->service = $e->getApplication()->getServiceManager()->get(AuthenticationService::class);
-		$this->layout('layout/login');
+		$this->layout('layout/log-in');
 		return parent::onDispatch($e);
 	}
 
@@ -39,7 +39,7 @@ class LogInController extends AbstractActionController {
 
 				if ($result->isValid()) {
 					$this->getEventManager()->trigger('authentication.success', $this, [$data, $result]);
-					return $this->redirect()->toRoute('login/success');
+					return $this->redirect()->toRoute('log-in/success');
 				}
 
 				$this->getEventManager()->trigger('authentication.fail', $this, [$data, $result]);

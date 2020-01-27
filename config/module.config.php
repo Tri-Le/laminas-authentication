@@ -12,10 +12,10 @@ use TriLe\Authentication\Controller\SuccessController;
 return [
     'router' => [
         'routes' => [
-            'login' => [
+            'log-in' => [
                 'type' => Literal::class,
                 'options' => [
-                    'route' => '/login',
+                    'route' => '/log-in',
                     'defaults' => [
                         'controller' => LogInController::class,
                         'action' => 'index'
@@ -56,9 +56,9 @@ return [
     ],
     'view_manager' => [
         'template_map' => [
-            'layout/login' => __DIR__ . '/../view/layout/login.phtml',
+            'layout/log-in' => __DIR__ . '/../view/layout/login.phtml',
 
-            'tri-le/authentication/login/index' => __DIR__ . '/../view/login/index.phtml',
+            'tri-le/authentication/log-in/index' => __DIR__ . '/../view/log-in/index.phtml',
 	        'tri-le/authentication/success/index' => __DIR__ . '/../view/success/index.phtml'
         ]
     ],

@@ -16,7 +16,7 @@ class LogOutController extends AbstractActionController {
 
 	public function onDispatch(MvcEvent $e) {
 		$this->service = $e->getApplication()->getServiceManager()->get(AuthenticationService::class);
-		$this->layout('layout/login');
+		$this->layout('layout/log-in');
 		return parent::onDispatch($e);
 	}
 
