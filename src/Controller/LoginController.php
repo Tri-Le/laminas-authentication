@@ -28,7 +28,7 @@ class LoginController extends AbstractActionController {
 			if ($form->setData($_POST)->isValid()) {
 				$data = $form->getData();
 				$adapter = $this->service->getAdapter();
-				$adapter->setIdentity($data['Email'])->setCredential($data['Password']);
+				$adapter->setIdentity($data['Email'])->setCredential(hash('sha256', $data['Password']));
 				$this->getEventManager()->trigger('authentication.pre', $this, [$data]);
 				$result = $this->service->authenticate();
 
