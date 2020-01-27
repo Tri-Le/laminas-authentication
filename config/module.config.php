@@ -12,10 +12,10 @@ use TriLe\Authentication\Controller\SuccessController;
 return [
     'router' => [
         'routes' => [
-            'log-in' => [
+            'login' => [
                 'type' => Literal::class,
                 'options' => [
-                    'route' => '/log-in',
+                    'route' => '/login',
                     'defaults' => [
                         'controller' => LogInController::class,
                         'action' => 'index'
