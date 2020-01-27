@@ -39,7 +39,7 @@ class LogInController extends AbstractActionController {
 
 				if ($result->isValid()) {
 					$this->getEventManager()->trigger('authentication.success', $this, [$data, $result]);
-					return $this->redirect()->toRoute('log-in/success');
+					return $this->redirect()->toRoute('login/success');
 				}
 
 				$this->getEventManager()->trigger('authentication.fail', $this, [$data, $result]);
