@@ -1,11 +1,11 @@
 #!/usr/bin/env php
 <?php
 
-if (file_exists($a = getcwd() . '/vendor/autoload.php')) {
+if(file_exists($a = getcwd() . '/vendor/autoload.php')) {
 	require $a;
-} elseif (file_exists($a = __DIR__ . '/../../../autoload.php')) {
+} elseif(file_exists($a = __DIR__ . '/../../../autoload.php')) {
 	require $a;
-} elseif (file_exists($a = __DIR__ . '/../vendor/autoload.php')) {
+} elseif(file_exists($a = __DIR__ . '/../vendor/autoload.php')) {
 	require $a;
 } else {
 	fwrite(STDERR, 'Cannot locate autoloader; please run "composer install"' . PHP_EOL);
@@ -22,10 +22,14 @@ try {
 } catch(Exception $e) {
 	$existed = false;
 }
-if ($existed) {
+
+
+if($existed) {
 	fwrite(STDERR, 'Table ' . $config['table_name'] . ' is already exist.' . PHP_EOL);
 	return;
 }
+
+echo 'Create table' . $config['table_name'] . PHP_EOL;
 $adapter->query(<<<EOF
 create table ${config['table_name']}
 (
@@ -37,10 +41,33 @@ create table ${config['table_name']}
     status   smallint
 )
 EOF
-	, \Laminas\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+	,
+	\Laminas\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
 
 $adapter->query(<<<EOF
 create unique index ${config['table_name']}_${config['identity_column']}_uindex
     on ${config['table_name']} (${config['identity_column']})
 EOF
-	, \Laminas\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+	,
+	\Laminas\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+
+
+echo 'Create user' . PHP_EOL;
+$validator = new \Laminas\Validator\EmailAddress();
+$handle = fopen("php://stdin", "r");
+do {
+	echo 'Email? ' . PHP_EOL;
+	$email = trim(fgets($handle));
+} while(!$validator->isValid($email));
+
+$validator = new \Laminas\Validator\NotEmpty();
+do {
+	echo 'Password? ' . PHP_EOL;
+	$password = trim(fgets($handle));
+} while(!$validator->isValid($password));
+
+fclose($handle);
+
+$adapter->query('INSERT INTO ' . $config['table_name'] . ' (email, password, status) VALUES (?,?,1)')
+	->execute([$email, hash('sha256', $password)]);
+
