@@ -59,7 +59,7 @@ return [
 	    'table_name' => 'w_users',
 	    'identity_column' => 'email',
 	    'credential_column' => 'password',
-	    'credential_treatment' => 'SHA256(?)',
+	    'credential_treatment' => '?',
         'storage' => [
             'name' => Session::class,
             'options' => [
