@@ -4,6 +4,9 @@
 namespace TriLe\Authentication\Form;
 
 
+use Laminas\Validator\EmailAddress;
+use Laminas\Validator\NotEmpty;
+
 class Login extends \Laminas\Form\Form
 {
     public function init()
@@ -47,7 +50,20 @@ class Login extends \Laminas\Form\Form
             'options' => [
                 'label' => 'Password'
             ]
-        ]);
+        ])->getInputFilter()->add([
+        	'filters' => [
+
+	        ],
+	        'validators' => [
+	        	['name' => NotEmpty::class],
+	        	['name' => EmailAddress::class]
+	        ]
+        ], 'Email')->add([
+        	'filters' => [],
+	        'validators' => [
+		        ['name' => NotEmpty::class],
+	        ]
+        ], 'Password');
     }
 
 }
