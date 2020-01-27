@@ -56,7 +56,7 @@ return [
         ]
     ],
     'authentication' => [
-	    'table_name' => 'w_login',
+	    'table_name' => 'w_users',
 	    'identity_column' => 'email',
 	    'credential_column' => 'password',
 	    'credential_treatment' => 'SHA256(?)',

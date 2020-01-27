@@ -11,6 +11,9 @@
       "TriLe\\Authentication\\": "src"
     }
   },
+  "bin": [
+    "bin/create-user-table"
+  ],
   "require": {
     "php": ">=7.0",
     "laminas/laminas-mvc": "^3.0",

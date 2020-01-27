@@ -1,0 +1,22 @@
+#!/usr/bin/env php
+<?php
+
+$app = \Laminas\Mvc\Application::init(require getcwd() . '/config/application.config.php');
+$config = $app->getConfig()['authentication'];
+
+$sql = <<<EOF
+create table ${config['table_name']}
+(
+	id       integer
+        constraint ${config['table_name']}_pk
+            primary key autoincrement,
+    ${config['identity_column']}    varchar default 255,
+    ${config['credential_column']} varchar default 255,
+    status   smallint
+);
+
+create unique index ${config['table_name']}_${config['identity_column']}_uindex
+    on ${config['table_name']} (${config['identity_column']});
+EOF;
+
+$app->getServiceManager()->get(\Laminas\Db\Adapter\Adapter::class)->query($sql);
