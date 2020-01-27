@@ -5,7 +5,8 @@ use Laminas\Authentication\AuthenticationService;
 use Laminas\Authentication\Storage\Session;
 use Laminas\Router\Http\Literal;
 use Laminas\ServiceManager\Factory\InvokableFactory;
-use TriLe\Authentication\Controller\LoginController;
+use TriLe\Authentication\Controller\LogInController;
+use TriLe\Authentication\Controller\LogOutController;
 use TriLe\Authentication\Controller\SuccessController;
 
 return [
@@ -16,7 +17,7 @@ return [
                 'options' => [
                     'route' => '/login',
                     'defaults' => [
-                        'controller' => LoginController::class,
+                        'controller' => LogInController::class,
                         'action' => 'index'
                     ]
                 ],
@@ -33,12 +34,23 @@ return [
 			            ]
 		            ]
 	            ]
-            ]
+            ],
+	        'logout' => [
+		        'type' => Literal::class,
+		        'options' => [
+			        'route' => '/logout',
+			        'defaults' => [
+				        'controller' => LogOutController::class,
+				        'action' => 'index'
+			        ]
+		        ],
+		        ]
         ]
     ],
     'controllers' => [
         'factories' => [
-            LoginController::class => InvokableFactory::class,
+            LogInController::class => InvokableFactory::class,
+	        LogOutController::class => InvokableFactory::class,
 	        SuccessController::class => InvokableFactory::class
         ]
     ],

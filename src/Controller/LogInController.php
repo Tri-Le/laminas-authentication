@@ -8,7 +8,7 @@ use Laminas\Mvc\MvcEvent;
 use Laminas\View\Model\ViewModel;
 use TriLe\Authentication\Form\Login;
 
-class LoginController extends AbstractActionController {
+class LogInController extends AbstractActionController {
 	/**
 	 * @var AuthenticationService
 	 */
@@ -34,6 +34,7 @@ class LoginController extends AbstractActionController {
 				$adapter = $this->service->getAdapter();
 				$adapter->setIdentity($data['Email'])->setCredential(hash('sha256', $data['Password']));
 				$this->getEventManager()->trigger('authentication.pre', $this, [$data]);
+				session_regenerate_id(true);
 				$result = $this->service->authenticate();
 
 				if ($result->isValid()) {
