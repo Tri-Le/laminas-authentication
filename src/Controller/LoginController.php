@@ -38,6 +38,7 @@ class LoginController extends AbstractActionController {
 				}
 
 				$this->getEventManager()->trigger('authentication.fail', $this, [$data, $result]);
+				$form->get('Password')->setMessages(['Invalid credential']);
 			}
 		}
 
