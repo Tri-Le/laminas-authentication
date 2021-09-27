@@ -38,8 +38,9 @@ class LogInController extends AbstractActionController {
 				$result = $this->service->authenticate();
 
 				if ($result->isValid()) {
+					$dest = $this->params()->fromQuery('_dest');
 					$this->getEventManager()->trigger('authentication.success', $this, [$data, $result]);
-					return $this->redirect()->toRoute('login/success');
+					return $this->redirect()->toRoute('login/success', [], ['query' => ['_dest' => $dest]]);
 				}
 
 				$this->getEventManager()->trigger('authentication.fail', $this, [$data, $result]);
